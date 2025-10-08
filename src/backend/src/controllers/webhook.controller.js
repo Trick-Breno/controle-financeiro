@@ -8,7 +8,6 @@ export const handleClerkWebhook = async (req, res) => {
   }
 
   const headers = req.headers;
-  // O corpo da requisição vem como um "buffer" por causa do middleware que vamos usar
   const payload = req.body.toString('utf-8');
 
   const svix_id = headers["svix-id"];

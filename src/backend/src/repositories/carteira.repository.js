@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-export const insertCarteira = async (carteiraData) => {
+export const createCarteira = async (carteiraData) => {
     const { userId, nome, saldo_inicial, saldo_atual } = carteiraData;
     
     const query = `
@@ -18,13 +18,33 @@ export const insertCarteira = async (carteiraData) => {
     }
 };
 
-export const findByUserId = async (userId) => {
-    const query = 'SELECT * FROM carteiras WHERE user_id = $1 ORDER BY nome ASC';
+export const findUserCarteiras  = async (userId) => {
+    const query = `SELECT * FROM carteiras WHERE user_id = $1 ORDER BY nome ASC`;
+    
     try {
         const {rows} = await pool.query(query, [userId]);
         return rows;
     } catch (error) {
         console.error('Erro no repositório ao buscar carteiras por user_id:', error);
+        throw error;
+    }
+};
+
+export const updateCarteiraById  = async (id, userId, carteiraData) => {
+    const {nome} = carteiraData;
+
+    const query = `
+    UPDATE carteiras 
+    SET nome = $1
+    WHERE id = $2 AND user_id = $3
+    RETURNING *;
+    `;
+
+    try {
+        const {rows} = await pool.query(query, [nome, id, userId]);
+        return rows[0] || null;
+    } catch (error) {
+        console.error('Erro no repositório ao atualizar carteira:', error);
         throw error;
     }
 };
