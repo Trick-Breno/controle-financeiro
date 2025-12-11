@@ -1,53 +1,90 @@
-import {createCarteira, findUserCarteiras, updateCarteiraById} from '../services/carteira.service.js';
+import * as service from '../services/carteira.service.js';
 
-export const handleCreateCarteira = async (req, res) => {
+export const createCarteira = async (req, res, next) => {
     try {
         const userId = req.auth.userId;
-
         const {nome, saldo_inicial} = req.body;
 
-        if (!nome || saldo_inicial === undefined) {
-            return res.status(400).json({error: 'Nome e saldo inicial são obrigatórios.'});
-        }
+        const newCarteira = await service.createCarteira(userId, {nome, saldo_inicial});
+        res.status(201).json(newCarteira);
 
-        const novaCarteira = await createCarteira(userId, {nome, saldo_inicial});
-        res.status(201).json(novaCarteira);
     } catch (error) {
-        console.error('Erro no controlador ao criar carteira:', error);
-        res.status(500).json({error: 'Erro interno no servidor'});
+        next(error);
     }
 };
 
-export const handleGetCarteira = async (req, res) => {
+export const getAllCarteiras = async (req, res) => {
     try {
         const userId = req.auth.userId;
-
-        const carteiras = await findUserCarteiras(userId);
+        const carteiras = await service.getAllCarteiras(userId);
         res.status(200).json(carteiras);
+
     } catch (error) {
         console.error('Erro no controlador ao buscar carteiras:', error);
         res.status(500).json({error: 'Erro interno no servidor'});
     }
 };
 
-export const handleUpdateCarteira = async (req, res) => {
+export const getCarteiraById = async(req, res) => {
     try {
         const userId = req.auth.userId;
         const {id} = req.params;
-        const {nome} = req.body;
 
-        if(!nome) {
-            return res.status(400).json({error: 'Os campos sao obrigattórios'});
+        const carteira = await service.getCarteiraById(id, userId);
+        
+        if (!carteira) {
+            return res.status(404).json({ error: 'Carteira não encontrada ou não pertence ao usuário.' });
         }
 
-        const carteiraAtualizada = await updateCarteiraById(id, userId, {nome});
-
-        if(!carteiraAtualizada) {
-            return res.status(404).json({error: 'Carteira não encontrada ou não pertence ao usuário'})
-        }
-        res.status(200).json(carteiraAtualizada);
+        res.status(200).json(carteira);
+        
     } catch (error) {
-        console.error('Erro no controlador ao atualizar carteira:', error);
+        console.error('Erro no controlador ao buscar carteira por ID:', error);
         res.status(500).json({error: 'Erro interno no servidor'});
     }
+}
+
+export const updateCarteira = async(req, res) => {
+    try { 
+        const userId = req.auth.userId;
+        const {id} = req.params;
+        const updateData = req.body;
+
+        if (Object.keys(updateData).length === 0) {
+            return res.status(400).json({error: 'Nenhum dado fornecido para atualização.'});
+        }
+
+        const updatedCarteira = await service.updateCarteira(id, userId, updateData);
+
+        if (!updatedCarteira) {
+            return res.status(404).json({ error: 'Carteira não encontrada ou não pertence ao usuário.' });
+        }
+        res.status(200).json(updatedCarteira);
+
+    } catch (error) {
+        if (error.message === 'Nenhum campo fornecido para atualização.') {
+            return res.status(400).json({ error: error.message });
+        }
+        console.error('Erro no controlador ao atualizar parcialmente carteira:', error);
+        res.status(500).json({ error: 'Erro interno do servidor' });
+    }
 };
+
+export const deleteCarteira = async(req, res) => {
+    try {
+        const userId = req.auth.userId;
+        const {id} = req.params;
+
+        const deletedCarteira = await service.deleteCarteira(id, userId);
+
+        if(!deletedCarteira) {
+            return res.status(404).json({ error: 'Carteira não encontrada ou não pertence ao usuário.' });
+        }
+
+        res.status(204).send();
+
+    } catch (error) {
+        console.error('Erro no controlador ao deletar carteira:', error);
+        res.status(500).json({error: 'Erro interno no servidor'});
+    }
+}
