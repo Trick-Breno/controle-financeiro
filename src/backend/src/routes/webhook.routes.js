@@ -1,4 +1,3 @@
-// src/routes/webhook.routes.js
 import { Router } from 'express';
 import { handleClerkWebhook } from '../controllers/webhook.controller.js';
 import express from 'express';

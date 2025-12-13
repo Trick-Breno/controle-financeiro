@@ -1,4 +1,3 @@
-// src/middlewares/validation.middleware.js
 import { ZodError } from 'zod';
 import { ValidationError } from '../utils/AppError.js';
 
