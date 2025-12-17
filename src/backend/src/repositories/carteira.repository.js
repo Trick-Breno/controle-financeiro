@@ -26,44 +26,30 @@ export const insert = async (carteira) => {
 export const findAll = async (userId) => {
     const query = `SELECT * FROM carteiras WHERE user_id = $1 ORDER BY nome ASC`;
     
-    try {
-        const {rows} = await pool.query(query, [userId]);
-        return rows;
-    } catch (error) {
-        console.error('Erro no repositório ao buscar carteiras do usuario:', error);
-        throw error;
-    }
+    const {rows} = await pool.query(query, [userId]);
+    return rows;
 };
 
 export const findById = async(id, userId) => {
     const query = `SELECT * FROM carteiras WHERE id = $1 AND user_id = $2`;
 
-    try {
-        const {rows} = await pool.query(query, [id, userId]);
-        return rows[0] || null;
-    } catch (error) {
-        console.error('Erro no repositório ao buscar carteira por ID:', error);
-        throw error;
-    }
+    const {rows} = await pool.query(query, [id, userId]);
+    return rows[0] || null;
 };
 
 export const update = async (id, userId, carteiraData) => {
     const fields = Object.keys(carteiraData);
     const values = Object.values(carteiraData);
 
-    if (fields.length === 0) {
-        throw new Error('Nenhum campo fornecido para atualização')
-    }
-
-    let setClause = fields.map((field, index) => 
-        `${field} = $${index + 1}`).join(',');
+    const setClause = fields.map((field, index) => 
+        `${field} = $${index + 1}`).join(', ');
 
     const queryParams = [...values, id, userId];
+    const idParamIndex = values.length + 1;
+    const userIdParamIndex = values.length + 2;
 
     const query = ` 
-    UPDATE carteiras
-    SET ${setClause}
-    WHERE id = $${fields.length + 1} AND user_id = $${fields.length + 2}
+    UPDATE carteiras SET ${setClause} WHERE id = $${idParamIndex} AND user_id = $${userIdParamIndex}
     RETURNING*;
     `;
 
@@ -71,7 +57,11 @@ export const update = async (id, userId, carteiraData) => {
         const {rows} = await pool.query(query, queryParams);
         return rows[0] || null;
     } catch (error) {
-        console.error('Erro no repositório ao atualizar parcialmente carteira:', error);
+        if (error?.code === '23505') {
+            throw new ConflictError('Já existe uma carteira com este nome.', {
+                field: 'nome'
+            });
+        }
         throw error;
     }
 };
@@ -79,11 +69,6 @@ export const update = async (id, userId, carteiraData) => {
 export const remove = async(id, userId) => {
     const query = `DELETE FROM carteiras WHERE id = $1 AND user_id = $2`;
 
-    try {
-        const result = await pool.query(query, [id, userId]);
-        return result.rowCount > 0;
-    } catch (error) {
-        console.error('Erro no repositório ao Deletar carteira:', error);
-        throw error;
-    }
-}
+    const result = await pool.query(query, [id, userId]);
+    return result.rowCount > 0;
+};
