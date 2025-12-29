@@ -3,9 +3,8 @@ import * as service from '../services/carteira.service.js';
 export const createCarteira = async (req, res, next) => {
     try {
         const userId = req.auth.userId;
-        const {nome, saldo_inicial} = req.body;
 
-        const newCarteira = await service.createCarteira(userId, {nome, saldo_inicial});
+        const newCarteira = await service.createCarteira(userId, req.body);
         res.status(201).json(newCarteira);
 
     } catch (error) {
@@ -16,6 +15,7 @@ export const createCarteira = async (req, res, next) => {
 export const getAllCarteiras = async (req, res, next) => {
     try {
         const userId = req.auth.userId;
+
         const carteiras = await service.getAllCarteiras(userId);
         res.status(200).json(carteiras);
 
@@ -42,9 +42,8 @@ export const updateCarteira = async(req, res, next) => {
     try { 
         const userId = req.auth.userId;
         const {id} = req.params;
-        const updateData = req.body;
 
-        const updatedCarteira = await service.updateCarteira(id, userId, updateData);
+        const updatedCarteira = await service.updateCarteira(id, userId, req.body);
         res.status(200).json(updatedCarteira);
 
     } catch (error) {
