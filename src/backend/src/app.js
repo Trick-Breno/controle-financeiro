@@ -3,6 +3,7 @@ import cors from 'cors';
 import { clerkInitializer  } from './middlewares/auth.middleware.js';
 import webhooksRouter from './routes/webhook.routes.js';
 import carteiraRouter from './routes/carteira.routes.js';
+import movimentacaoRouter from './routes/movimentacao.routes.js'
 import { globalErrorHandler } from './middlewares/error.middleware.js';
 
 const app = express();
@@ -17,7 +18,7 @@ app.get('/', (req, res) => {
 
 app.use('/api/webhooks', webhooksRouter);
 app.use('/api/carteiras', carteiraRouter);
-
+app.use('/api/movimentacoes', movimentacaoRouter)
 
 app.use(globalErrorHandler);
 

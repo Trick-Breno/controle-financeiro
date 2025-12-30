@@ -5,7 +5,7 @@ export const createCarteiraSchema = z.object({
     nome: z.string()
     .trim()
     .min(1, { message: 'O campo "nome" não pode estar vazio.' })
-    .max(100, { message: 'Max 100 caracteres permitido'}), 
+    .max(50, { message: 'Max 100 caracteres permitido'}), 
    
     saldo_inicial: z.number()
     .nonnegative({ message: 'O "saldo_inicial" deve ser um número positivo (maior ou igual a zero).' }) 
@@ -16,19 +16,19 @@ export const createCarteiraSchema = z.object({
 
 export const getCarteiraByIdSchema = z.object({
   params: z.object({
-    id: z.coerce.number().int().positive()
+    id: z.string()
   })
 });
 
 export const updateCarteiraSchema = z.object({
   params: z.object({
-    id: z.coerce.number().int().positive()
+    id: z.string()
   }),
   body: z.object({
     nome: z.string()
     .trim()
     .min(1,{message: 'O campo "nome" não pode estar vazio.'})
-    .max(100, {message: 'Max 100 caracteres.'})
+    .max(50, {message: 'Max 100 caracteres.'})
     .optional(),
 
     saldo_inicial: z.number()

@@ -30,21 +30,21 @@ export const findAll = async (userId) => {
     return rows;
 };
 
-export const findById = async(id, userId) => {
+export const findById = async(carteiraId, userId) => {
     const query = `SELECT * FROM carteiras WHERE id = $1 AND user_id = $2`;
 
-    const {rows} = await pool.query(query, [id, userId]);
+    const {rows} = await pool.query(query, [carteiraId, userId]);
     return rows[0] || null;
 };
 
-export const update = async (id, userId, carteiraData) => {
+export const update = async (carteiraId, userId, carteiraData) => {
     const fields = Object.keys(carteiraData);
     const values = Object.values(carteiraData);
 
     const setClause = fields.map((field, index) => 
         `${field} = $${index + 1}`).join(', ');
 
-    const queryParams = [...values, id, userId];
+    const queryParams = [...values, carteiraId, userId];
     const idParamIndex = values.length + 1;
     const userIdParamIndex = values.length + 2;
 
@@ -66,9 +66,9 @@ export const update = async (id, userId, carteiraData) => {
     }
 };
 
-export const remove = async(id, userId) => {
+export const remove = async(carteiraId, userId) => {
     const query = `DELETE FROM carteiras WHERE id = $1 AND user_id = $2`;
 
-    const result = await pool.query(query, [id, userId]);
+    const result = await pool.query(query, [carteiraId, userId]);
     return result.rowCount > 0;
 };
