@@ -27,9 +27,9 @@ export const getAllCarteiras = async (req, res, next) => {
 export const getCarteiraById = async(req, res, next) => {
     try {
         const userId = req.auth.userId;
-        const {carteiraId} = req.params;
+        const {id} = req.params;
 
-        const carteira = await service.getCarteiraById(carteiraId, userId);
+        const carteira = await service.getCarteiraById(id, userId);
 
         res.status(200).json(carteira);
         
@@ -41,9 +41,9 @@ export const getCarteiraById = async(req, res, next) => {
 export const updateCarteira = async(req, res, next) => {
     try { 
         const userId = req.auth.userId;
-        const {carteiraId} = req.params;
+        const {id} = req.params;
 
-        const updatedCarteira = await service.updateCarteira(carteiraId, userId, req.body);
+        const updatedCarteira = await service.updateCarteira(id, userId, req.body);
         res.status(200).json(updatedCarteira);
 
     } catch (error) {
@@ -54,9 +54,9 @@ export const updateCarteira = async(req, res, next) => {
 export const deleteCarteira = async(req, res, next) => {
     try {
         const userId = req.auth.userId;
-        const {carteiraId} = req.params;
+        const {id} = req.params;
 
-        await service.deleteCarteira(carteiraId, userId);
+        await service.deleteCarteira(id, userId);
 
         res.status(204).send();
 

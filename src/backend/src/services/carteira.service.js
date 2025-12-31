@@ -17,8 +17,8 @@ export const getAllCarteiras = async (userId) => {
     return repository.findAll(userId);
 };
 
-export const getCarteiraById = async(carteiraId, userId) => {
-    const carteira = await repository.findById(carteiraId, userId);
+export const getCarteiraById = async(id, userId) => {
+    const carteira = await repository.findById(id, userId);
     
     if (!carteira) {
         throw new NotFoundError('Carteira não encontrada')
@@ -28,8 +28,8 @@ export const getCarteiraById = async(carteiraId, userId) => {
 
 };
 
-export const updateCarteira = async(carteiraId,userId, carteiraData) => {
-    const updatedCarteira = await repository.update(carteiraId, userId, carteiraData);
+export const updateCarteira = async(id,userId, carteiraData) => {
+    const updatedCarteira = await repository.update(id, userId, carteiraData);
     
     if(!updatedCarteira) {
         throw new NotFoundError('Carteira nao encontrada para atualização');
@@ -38,8 +38,8 @@ export const updateCarteira = async(carteiraId,userId, carteiraData) => {
     return updatedCarteira
 };
 
-export const deleteCarteira = async(carteiraId, userId) => {
-    const deletedCarteira = await repository.remove(carteiraId, userId);
+export const deleteCarteira = async(id, userId) => {
+    const deletedCarteira = await repository.remove(id, userId);
 
     if (!deletedCarteira) {
         throw new NotFoundError('Carteira não encontrada para excluir')

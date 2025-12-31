@@ -17,12 +17,18 @@ export const createCarteiraSchema = z.object({
 export const getCarteiraByIdSchema = z.object({
   params: z.object({
     id: z.string()
+    .regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/, 
+    { message: 'ID da carteira inválido' }),
+    
   })
 });
 
 export const updateCarteiraSchema = z.object({
   params: z.object({
     id: z.string()
+    .regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/, 
+    { message: 'ID da carteira inválido' }),
+
   }),
   body: z.object({
     nome: z.string()

@@ -6,7 +6,7 @@ export const createAtomica = async (movimentacao) => {
     try {
         await client.query('BEGIN');
 
-        const { userId, carteiraId, descricao, valor, tipo, dataReferencia, status } = movimentacao;
+        const { userId, id_carteira, descricao, valor, tipo, data_referencia, status } = movimentacao;
 
         const queryMov = `
             INSERT INTO movimentacoes
@@ -17,15 +17,15 @@ export const createAtomica = async (movimentacao) => {
 
         const {rows} = await client.query(queryMov, [
             userId,
-            carteiraId,
+            id_carteira,
             descricao,
             valor,
             tipo,
-            dataReferencia,
+            data_referencia,
             status
         ]);
 
-        if (status === 'concluido' && carteiraId) {
+        if (status === 'concluido' && id_carteira) {
             let querySaldo = '';
 
             if (tipo === 'receita') {
@@ -34,7 +34,7 @@ export const createAtomica = async (movimentacao) => {
                 querySaldo =    `UPDATE carteiras SET saldo_atual = saldo_atual - $1 WHERE id = $2`
             }
 
-            await client.query(querySaldo, [valor, carteiraId]);
+            await client.query(querySaldo, [valor, id_carteira]);
         }
 
         await client.query('COMMIT');
@@ -47,4 +47,18 @@ export const createAtomica = async (movimentacao) => {
     } finally {
         client.release();
     }
-}
+};
+
+export const findAll = async (userId) => {
+    const query = `SELECT * FROM movimentacoes WHERE user_id = $1 ORDER BY data_criacao DESC`;
+
+    const {rows} = await pool.query(query, [userId]);
+    return rows;
+};
+
+export const findById = async (id, userId) => {
+    const query = `SELECT * FROM movimentacoes WHERE id = $1 AND user_id = $2`;
+
+    const {rows} = await pool.query(query, [id, userId]);
+    return rows[0] || null;
+};
