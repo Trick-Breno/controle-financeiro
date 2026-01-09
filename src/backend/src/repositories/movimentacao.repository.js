@@ -1,5 +1,25 @@
 import pool from '../config/db.js';
 
+const recalcularSaldoCarteira = async (client, idCarteira) => {
+    const querySaldo = `
+        UPDATE carteiras 
+        SET saldo_atual = saldo_inicial + (
+            SELECT COALESCE(SUM(
+                CASE 
+                    WHEN tipo = 'receita' THEN valor 
+                    WHEN tipo = 'despesa' THEN -valor 
+                    ELSE 0 
+                END
+            ), 0)
+            FROM movimentacoes
+            WHERE id_carteira = $1 
+            AND status IN ('concluido', 'parcial')
+        )
+        WHERE id = $1;
+    `;
+    await client.query(querySaldo, [idCarteira]);
+};
+
 export const createAtomica = async (movimentacao) => {
     const client = await pool.connect();
 
@@ -25,16 +45,8 @@ export const createAtomica = async (movimentacao) => {
             status
         ]);
 
-        if (status === 'concluido' && id_carteira) {
-            let querySaldo = '';
-
-            if (tipo === 'receita') {
-                querySaldo = `UPDATE carteiras SET saldo_atual = saldo_atual + $1 WHERE id = $2`;    
-            } else if (tipo === 'despesa') {
-                querySaldo =    `UPDATE carteiras SET saldo_atual = saldo_atual - $1 WHERE id = $2`
-            }
-
-            await client.query(querySaldo, [valor, id_carteira]);
+        if (id_carteira) {
+            await recalcularSaldoCarteira(client, id_carteira);
         }
 
         await client.query('COMMIT');
@@ -97,26 +109,9 @@ export const update = async (id, userId, movimentacaoData ) => {
             return null;
         }
 
-        const idCarteira = updatedMovimentacao.id_carteira;
-
-        const querySaldo = `
-            UPDATE carteiras 
-            SET saldo_atual = saldo_inicial + (
-                SELECT COALESCE(SUM(
-                    CASE
-                        WHEN tipo = 'receita' THEN valor
-                        WHEN tipo = 'despesa' THEN - valor
-                        ELSE 0
-                    END
-                ), 0)
-                FROM movimentacoes
-                WHERE id_carteira = $1
-                AND status = 'concluido'
-            )
-            WHERE id = $1;
-        `;
-
-        await client.query(querySaldo, [idCarteira]);
+        if (updatedMovimentacao.id_carteira) {
+            await recalcularSaldoCarteira(client, updatedMovimentacao.id_carteira)
+        }
 
         await client.query('COMMIT');
         return updatedMovimentacao;

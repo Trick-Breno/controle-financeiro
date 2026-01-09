@@ -37,6 +37,9 @@ export const updateCarteiraSchema = z.object({
     .max(50, {message: 'Max 100 caracteres.'})
     .optional(),
 
+        saldo_atual: z.number()
+    .nonnegative({ message: 'O "saldo_inicial" deve ser um número positivo (maior ou igual a zero).' })
+    .optional(),
     saldo_inicial: z.number()
     .nonnegative({ message: 'O "saldo_inicial" deve ser um número positivo (maior ou igual a zero).' })
     .optional()

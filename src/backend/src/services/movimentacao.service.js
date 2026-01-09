@@ -36,3 +36,13 @@ export const getMovimentacaoById = async (id, userId) => {
 
     return movimentacao;
 };
+
+export const updateMovimentacao = async (id, userId, movimentacaoData) => {
+    const updated = await repository.update(id, userId, movimentacaoData);
+
+    if (!updated) {
+        throw new NotFoundError('Movimentacao não encontrada ou não pertence ao usuário');
+    }
+
+    return updated;
+};

@@ -30,9 +30,21 @@ export const getMovimentacaoById = async (req, res, next) => {
         const {id} = req.params;
 
         const movimentacao = await service.getMovimentacaoById(id, userId);
-
         res.status(200).json(movimentacao);
 
+    } catch (error) {
+        next(error);
+    }
+};
+
+export const updateMovimentacao = async (req, res, next) => {    
+    try{
+        const userId = req.auth.userId;
+        const {id} = req.params
+
+        const updated = await service.updateMovimentacao(id, userId, req.body);
+        res.status(200).json(updated);
+        
     } catch (error) {
         next(error);
     }
