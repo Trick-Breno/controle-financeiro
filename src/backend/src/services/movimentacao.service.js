@@ -46,3 +46,12 @@ export const updateMovimentacao = async (id, userId, movimentacaoData) => {
 
     return updated;
 };
+
+export const deleteMovimentacao = async (id, userId) => {
+    const deleteMovimentacao = await repository.remove(id, userId);
+
+    if(!deleteMovimentacao) {
+        throw new NotFoundError('movimentação não encontrada para excluir');
+    }
+    return deleteMovimentacao;
+};

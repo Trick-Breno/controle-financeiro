@@ -49,3 +49,16 @@ export const updateMovimentacao = async (req, res, next) => {
         next(error);
     }
 };
+
+export const deleteMovimentacao = async (req, res, next) => {
+    try {
+        const userId = req.auth.userId;
+        const {id} = req.params
+
+        await service.deleteMovimentacao(id, userId);
+        res.status(204).send();
+
+    } catch (error) {
+        next(error);
+    }
+};

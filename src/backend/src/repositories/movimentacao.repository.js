@@ -1,6 +1,6 @@
 import pool from '../config/db.js';
 
-const recalcularSaldoCarteira = async (client, idCarteira) => {
+const _recalcularSaldoCarteira = async (client, idCarteira) => {
     const querySaldo = `
         UPDATE carteiras 
         SET saldo_atual = saldo_inicial + (
@@ -46,7 +46,7 @@ export const createAtomica = async (movimentacao) => {
         ]);
 
         if (id_carteira) {
-            await recalcularSaldoCarteira(client, id_carteira);
+            await _recalcularSaldoCarteira(client, id_carteira);
         }
 
         await client.query('COMMIT');
@@ -110,11 +110,47 @@ export const update = async (id, userId, movimentacaoData ) => {
         }
 
         if (updatedMovimentacao.id_carteira) {
-            await recalcularSaldoCarteira(client, updatedMovimentacao.id_carteira)
+            await _recalcularSaldoCarteira(client, updatedMovimentacao.id_carteira)
         }
 
         await client.query('COMMIT');
         return updatedMovimentacao;
+
+    } catch (error) {
+        await client.query('ROLLBACK');
+        throw error;
+    } finally {
+        client.release();
+    }
+};
+
+export const remove = async(id, userId) => {
+    const client = await pool.connect();
+
+    try {
+        await client.query('BEGIN')
+        
+        const query = `
+        DELETE FROM movimentacoes 
+        WHERE id = $1 AND user_id = $2
+        RETURNING id_carteira;
+        `;
+
+        const {rows} = await client.query(query, [id, userId]);
+
+        if(rows.length === 0) {
+            await client.query('ROLLBACK');
+            return false
+        }
+
+        const idCarteira = rows[0].id_carteira;
+
+        if (idCarteira) {
+            await _recalcularSaldoCarteira(client, idCarteira);
+        }
+
+        await client.query('COMMIT');
+        return true;
 
     } catch (error) {
         await client.query('ROLLBACK');
