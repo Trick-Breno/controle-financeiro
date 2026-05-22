@@ -1,0 +1,28 @@
+import axios from 'axios';
+
+// Se o .env falhar, ele usa a URL do localhost:3000 por padrão
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+
+const api = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
+
+// Interceptor apenas para tratar os dados da resposta e erros padronizados
+api.interceptors.response.use(
+  (response) => {
+    if (response.status === 204) {
+      return null;
+    }
+    return response.data; 
+  },
+  (error) => {
+    const customMessage = error.response?.data?.message || 'Erro inesperado na comunicação com a API.';
+    console.error('Erro na API:', customMessage);
+    return Promise.reject(new Error(customMessage)); 
+  }
+);
+
+export default api;
