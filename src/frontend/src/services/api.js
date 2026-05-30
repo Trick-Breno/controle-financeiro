@@ -1,7 +1,9 @@
 import axios from 'axios';
 
-// Se o .env falhar, ele usa a URL do localhost:3000 por padrão
-const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+//solução temporaria para requisição funcionar no pc e no telefone
+const hostAtual = window.location.hostname;
+
+const BASE_URL = `http://${hostAtual}:3000/api`; /*const BASE_URL = import.meta.env.VITE_API_URL;*/
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -10,7 +12,6 @@ const api = axios.create({
   },
 });
 
-// Interceptor apenas para tratar os dados da resposta e erros padronizados
 api.interceptors.response.use(
   (response) => {
     if (response.status === 204) {
