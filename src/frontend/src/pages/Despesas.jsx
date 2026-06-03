@@ -46,10 +46,10 @@ export default function Despesas() {
         <div className="mx-2 shadow-md border border-gray-100  bg-white rounded-xl">
             <div className="mt-2 mx-1 pb-2 flex gap-2  ">
                 <BotaoFiltro selecionado={filtroAtivo === "pendente"} onClick={() => setFiltroAtivo("pendente")}>
-                  Pendente
+                  Pendente 
                 </BotaoFiltro>
                 <BotaoFiltro selecionado={filtroAtivo === "concluido"} onClick={() => setFiltroAtivo("concluido")}>
-                  Pago
+                  Pago 
                 </BotaoFiltro>
                 <BotaoFiltro selecionado={filtroAtivo === "todas"} onClick={() => setFiltroAtivo("todas")}>
                   Todas

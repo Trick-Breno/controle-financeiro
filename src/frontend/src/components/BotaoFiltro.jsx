@@ -5,9 +5,7 @@ export function BotaoFiltro({children, selecionado, onClick}) {
     : "text-gray-700";
 
     return (
-        <button 
-            onClick={onClick}
-            className={`${baseClasses} ${stateClasses}`}>
+        <button onClick={onClick} className={`${baseClasses} ${stateClasses}`}>
             {children}
         </button>
     );
