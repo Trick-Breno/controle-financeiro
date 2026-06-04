@@ -49,7 +49,7 @@ export default function Despesas() {
                   Pendente 
                 </BotaoFiltro>
                 <BotaoFiltro selecionado={filtroAtivo === "concluido"} onClick={() => setFiltroAtivo("concluido")}>
-                  Pago 
+                  Pago 1
                 </BotaoFiltro>
                 <BotaoFiltro selecionado={filtroAtivo === "todas"} onClick={() => setFiltroAtivo("todas")}>
                   Todas

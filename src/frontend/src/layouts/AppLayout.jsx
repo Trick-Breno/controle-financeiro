@@ -8,7 +8,7 @@ export default function AppLayout() {
       <Header />
       <ResumoFinanceiro />
       
-      <main className="max-w-7xl mx-auto px- py-4 w-full">
+      <main className="max-w-7xl mx-auto py-4 w-full">
         <Outlet />
       </main>
       
