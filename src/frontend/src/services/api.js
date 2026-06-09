@@ -22,8 +22,7 @@ api.interceptors.response.use(
   (error) => {
     const customMessage = error.response?.data?.message || 'Erro inesperado na comunicação com a API.';
     console.error('Erro na API:', customMessage);
-    return Promise.reject(new Error(customMessage)); 
-  }
+  return Promise.reject(error);  }
 );
 
 export default api;

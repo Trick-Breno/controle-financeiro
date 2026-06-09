@@ -6,7 +6,7 @@ export default function ResumoFinanceiro()  {
     const { saldoCarteiras } = useCarteiras();
 
     return (
-        <div className="mx-6 mt-2 px-4 shadow-md rounded-xl border border-gray-200 bg-white divide-y divide-gray-300">
+        <div className="mx-10 mt-2 px-4 shadow-md rounded-xl border border-gray-200 bg-white divide-y divide-gray-300">
 
             {/* Bloco do Saldo (Protegido) */}
             <div className="flex w-full gap-4 py-3 px-4 justify-between">

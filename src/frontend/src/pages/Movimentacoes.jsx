@@ -8,7 +8,7 @@ export default function Movimentacoes() {
 
     return (
         <div className="w-full">
-            <div className="mx-2 mt-2 flex border rounded-2xl bg-white shadow-sm">
+            <div className="mx-4 mt-2 flex border rounded-xl bg-white shadow-sm">
                 <TabNavegacao selecionado={abaAberta === 'despesas'} onClick={() => setAbaAberta('despesas')}>
                     Despesas
                 </TabNavegacao>
