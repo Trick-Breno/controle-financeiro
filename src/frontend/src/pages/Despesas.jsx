@@ -6,13 +6,13 @@ import { useCarteiras } from "../contexts/CarteirasContext";
 import { BotaoFiltro } from "../components/BotaoFiltro";
 import  Header from "../components/Header";
 
-
 export default function Despesas() {
   const {carregarMovimentacoes, despesas, resumoDespesas, loading } = useMovimentacoes();
   const {carregarCarteiras, carteiras} = useCarteiras();
   const [filtroAtivo, setFiltroAtivo] = useState("pendente");
   const [itemAberto, setItemAberto] = useState(null);
   const [acaoAberta, setAcaoAberta] = useState(null);
+
 
   const { getToken, userId } = useAuth();
 
@@ -54,17 +54,17 @@ export default function Despesas() {
       setAcaoAberta(null);
     } else {
       setItemAberto(id);
-      setAcaoAberta(null);
+      setAcaoAberta("pagar");
     }
   };
 
   const handlePagar = async (e, despesa) => {
     e.preventDefault();
 
-    const dados = Object.fromEntries(new FormData(e.target)) ;
+    const dados = Object.fromEntries(new FormData(e.target));
 
     const valorOriginal = Number(despesa.valor);
-    const valorPago = Number(dados.valor_pago)
+    const valorPago = Number(dados.valor_pago);
 
     try {
       const token = await getToken();
@@ -77,6 +77,7 @@ export default function Despesas() {
         }, {headers});
       } else {
         const valorRestante = valorOriginal - valorPago;
+        const dataLimpa = despesa.data_referencia ? despesa.data_referencia.split('T')[0] : new Date().toISOString().split('T')[0];
 
         await api.post(`/movimentacoes`, {
           descricao: `${despesa.descricao} (Parcial)`,
@@ -84,20 +85,22 @@ export default function Despesas() {
           id_carteira: dados.id_carteira,
           tipo: despesa.tipo,
           status: 'concluido',
-          data_referencia: despesa.data_referencia
+          data_referencia: dataLimpa
         }, {headers});
         
         await api.patch(`/movimentacoes/${despesa.id}`, {
-          valor: valorRestante,
+          valor: valorRestante
         }, {headers})
       }
 
       setItemAberto(null);
+      setAcaoAberta(null);
       await carregarMovimentacoes();
       await carregarCarteiras();
 
     } catch (error) {
       console.error("Erro ao pagar:", error);
+      alert(JSON.stringify(error.response?.data || error.message));
     }
   };
 
@@ -120,10 +123,28 @@ export default function Despesas() {
       await carregarMovimentacoes();
 
     } catch (error) {
-      console.error("Erro ao editar", error)
+      console.error("Erro ao editar despesa", error)
     }
   };
 
+  const handleDeletar = async(despesa) => {
+
+    try {
+      const token = await getToken();
+
+      await api.delete(`/movimentacoes/${despesa.id}`,{
+        headers: { Authorization: `Bearer ${token}`}
+      });
+
+      setItemAberto(null);
+      await carregarMovimentacoes();
+      await carregarCarteiras();
+
+    } catch (error) {
+      console.error("Erro ao deletar despesa", error);
+      alert(JSON.stringify(error.response?.data || error.message));
+    }
+  };
   
 
   return (
@@ -142,8 +163,9 @@ export default function Despesas() {
 
       <div className=" w-full flex flex-col gap-4 ">
         {despesasFiltradas.map((despesa) => (
-          <div className={`${itemAberto === despesa.id ? `${"bg-violet-50 font-semibold text-violet-700 text-sm border border-violet-200 shadow-md rounded-xl  mx-4  "}` : `${"bg-white text-sm shadow-sm mx-4 border border-gray-200  rounded-xl   "}` } }`} key={despesa.id}>
-            <div className=" py-6 px-6 flex items-center gap-4 justify-between" 
+          <div className="shadow-sm mx-4 border border-gray-200  rounded-xl   "key={despesa.id}>
+            <div className={`${itemAberto === despesa.id ? `${"border border-violet-300 border-b-white bg-violet-50 font-semibold text-violet-700 text-sm  rounded-t-xl py-6 px-6 flex items-center gap-4 justify-between"}` : `${"bg-white text-sm border border-gray-200 rounded-xl py-6 px-6 flex items-center gap-4 justify-between"}` } }`}
+ 
               onClick={() => toggleItem(despesa.id)} >
 
               <div className="w-full   ">
@@ -158,71 +180,75 @@ export default function Despesas() {
             </div>
 
             {itemAberto === despesa.id && (
-              <div>
-                {!acaoAberta && (
-                  <div className="flex gap-4 justify-center">
-                    <button                      
-                      className="flex-1 py-2 border border-gray-300 text-gray-700 rounded-lg text-sm hover:bg-gray-100 transition"
-                      onClick={() => setAcaoAberta('editar')}
-                      > Editar Dados
-                    </button>
-                    <button
-                      className="flex-1 py-2 bg-violet-600 text-white rounded-lg text-sm hover:bg-violet-700 transition"
-                      onClick={() => setAcaoAberta('pagar')}
-                      > Fazer Pagamento
-                    </button>
-                  </div>
-                )}
+              <div className="rounded-b-xl border border-violet-300 border-t-violet-200 bg-white">                
+
+              <div className="flex p-4 justify-center w-full">
+                <div className="flex   rounded-xl border border-violet-300 bg-white ">
+                  <button
+                    className={`${acaoAberta === 'pagar' ? `${"py-1 px-6 flex-1 text-sm bg-violet-50 text-violet-700 border-r border-violet-300 rounded-xl "}`: `${"py-1 px-6 text-gray-600 text-sm  rounded-xl "}`}}`}
+                    onClick={() => setAcaoAberta('pagar')}
+                    > Pagar
+                  </button>
+                  <button                      
+                    className={`${acaoAberta === 'editar' ?`${"py-1 px-6 flex-1 text-sm bg-violet-50 text-violet-700 border-l border-violet-300 rounded-xl "}`: `${"py-1 px-6 text-gray-600 text-sm rounded-xl "}`}}`}
+                    onClick={() => setAcaoAberta('editar')}
+                    > Editar
+                  </button>
+                </div>
+              </div>
 
                 {acaoAberta === 'editar' && (
                   <form onSubmit={(e) => handleEditar(e, despesa.id)} className="animate-fade-in">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                    <div className="pr-8 pl-4 grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                         <div className="flex flex-col">
-                            <label className="text-xs text-gray-600 mb-1">Renomear Descrição</label>
+                            <label className="text-xs text-gray-600 mb-1">Descrição</label>
                             <input name="descricao" defaultValue={despesa.descricao} className="border border-gray-300 rounded px-2 py-1.5 text-sm" required />
                         </div>
                         <div className="flex flex-col">
-                            <label className="text-xs text-gray-600 mb-1">Corrigir Valor Total</label>
+                            <label className="text-xs text-gray-600 mb-1">Valor</label>
                             <input name="valor" type="number" step="0.01" defaultValue={despesa.valor} className="border border-gray-300 rounded px-2 py-1.5 text-sm" required />
                         </div>
                         <div className="flex flex-col">
-                            <label className="text-xs text-gray-600 mb-1">Alterar Tipo</label>
+                            <label className="text-xs text-gray-600 mb-1">Tipo</label>
                             <select name="tipo" defaultValue={despesa.tipo} className="border border-gray-300 bg-white rounded px-2 py-1.5 text-sm">
                                 <option value="despesa">Despesa</option>
                                 <option value="receita">Receita</option>
                             </select>
                         </div>
                     </div>
-                    <div className="flex gap-2 justify-end">
-                        <button type="button" onClick={() => setAcaoAberta(null)} className="text-sm text-gray-500 px-4 py-1.5 hover:underline">Cancelar</button>
-                        <button type="submit" className="text-sm bg-gray-800 text-white px-4 py-1.5 rounded-md hover:bg-gray-900 transition">Salvar Alterações</button>
+                    <div className="flex flex-col p-2 gap-2 ">
+                      <div>
+                        <button type="submit" className="w-full  py-2 rounded-md text-sm bg-violet-700 text-white ">Salvar Alterações</button>
+                      </div>
+                      <div>
+                        <button type="button" onClick={() => handleDeletar(despesa)} className="w-full  text-sm text-red-500 py-2 border  border-red-300 rounded-md ">Excluir </button>
+                      </div>
                     </div>
                   </form>
                 )}
-              </div>
-            )}
 
-            {acaoAberta === 'pagar' && (
-              <form onSubmit={(e) => handlePagar(e, despesa)} className="animate-fade-in">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                      <div className="flex flex-col">
-                          <label className="text-xs text-gray-600 mb-1">Valor a Pagar</label>
-                          {/* Note que o defaultValue puxa o valor total para facilitar, mas o usuário pode apagar e colocar menos */}
-                          <input name="valor_pago" type="number" step="0.01" defaultValue={despesa.valor} max={despesa.valor} className="border border-gray-300 rounded px-2 py-1.5 text-sm" required />
+                {acaoAberta === 'pagar' && (
+                  <form onSubmit={(e) => handlePagar(e, despesa)} className="animate-fade-in">
+                      <div className="pl-4 pr-8 grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                          <div className="flex flex-col">
+                              <label className="text-xs text-gray-600 mb-1">Valor a Pagar</label>
+                              <input name="valor_pago" type="number" step="0.01" defaultValue={despesa.valor} max={despesa.valor} className="border border-gray-300 rounded px-2 py-1.5 text-sm" required />
+                          </div>
+                          <div className="flex flex-col">
+                              <label className="text-xs text-gray-600 mb-1">Carteira de Origem</label>
+                              <select name="id_carteira" className="border border-gray-300 bg-white rounded px-2 py-1.5 text-sm" required>
+                                  <option value="">Selecione...</option>
+                                  {carteiras.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}
+                              </select>
+                          </div>
                       </div>
-                      <div className="flex flex-col">
-                          <label className="text-xs text-gray-600 mb-1">Carteira de Origem</label>
-                          <select name="id_carteira" className="border border-gray-300 bg-white rounded px-2 py-1.5 text-sm" required>
-                              <option value="">Selecione...</option>
-                              {carteiras.map(c => <option key={c.id} value={c.id}>{c.nome}</option>)}
-                          </select>
+                      <div className="flex gap-2 justify-end">
+                          <button type="button" onClick={() => setAcaoAberta(null)} className="text-sm text-gray-500 px-4 py-1.5 hover:underline">Voltar</button>
+                          <button type="submit" className="text-sm bg-violet-600 text-white px-4 py-1.5 rounded-md hover:bg-violet-700 transition">Confirmar Pagamento</button>
                       </div>
-                  </div>
-                  <div className="flex gap-2 justify-end">
-                      <button type="button" onClick={() => setAcaoAberta(null)} className="text-sm text-gray-500 px-4 py-1.5 hover:underline">Voltar</button>
-                      <button type="submit" className="text-sm bg-violet-600 text-white px-4 py-1.5 rounded-md hover:bg-violet-700 transition">Confirmar Pagamento</button>
-                  </div>
-              </form>
+                  </form>
+                )}
+              </div>
             )}
           </div>
         ))}
@@ -277,3 +303,28 @@ export default function Despesas() {
                       </div>
                     </div>
 */
+
+
+/* bg-violet-600 text-white rounded-lg text-sm hover:bg-violet-700 transition*/
+
+/*if(valorPago >= valorOriginal) {
+        await api.patch(`/movimentacoes/${despesa.id}`, {
+          id_carteira: dados.id_carteira,
+          status: 'concluido'
+        }, {headers});
+      } else {
+        const valorRestante = valorOriginal - valorPago;
+
+        await api.post(`/movimentacoes`, {
+          descricao: `${despesa.descricao} (Parcial)`,
+          valor: valorPago,
+          id_carteira: dados.id_carteira,
+          tipo: despesa.tipo,
+          status: 'concluido',
+          data_referencia: despesa.data_referencia
+        }, {headers});
+        
+        await api.patch(`/movimentacoes/${despesa.id}`, {
+          valor: valorRestante
+        }, {headers})
+      }*/
