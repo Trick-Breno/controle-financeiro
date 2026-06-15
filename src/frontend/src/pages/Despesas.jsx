@@ -148,8 +148,8 @@ export default function Despesas() {
   
 
   return (
-    <div className="mt-  border-t border-gray-300  bg-gray-100 ">
-      <div className=" mx-4 pb-6 pt-2 flex gap-2  ">
+    <div className="mt-6  bg-white ">
+      <div className=" mx-4 pb-6 pt-2 flex gap-1   ">
         <BotaoFiltro selecionado={filtroAtivo === "pendente"} onClick={() => setFiltroAtivo("pendente")}>
           Pendente 
         </BotaoFiltro>
@@ -163,8 +163,8 @@ export default function Despesas() {
 
       <div className=" w-full flex flex-col gap-4 ">
         {despesasFiltradas.map((despesa) => (
-          <div className="shadow-sm mx-4 border border-gray-200  rounded-xl   "key={despesa.id}>
-            <div className={`${itemAberto === despesa.id ? `${"border border-violet-300 border-b-white bg-violet-50 font-semibold text-violet-700 text-sm  rounded-t-xl py-6 px-6 flex items-center gap-4 justify-between"}` : `${"bg-white text-sm border border-gray-200 rounded-xl py-6 px-6 flex items-center gap-4 justify-between"}` } }`}
+          <div className="shadow-sm mx-4 font-medium border border-gray-200  rounded-xl   "key={despesa.id}>
+            <div className={`${itemAberto === despesa.id ? `${"border border-violet-300 border-b-white  text-violet-700 text-sm  rounded-t-xl py-6 px-6 flex items-center gap-4 justify-between"}` : `${"bg-white text-sm text-gray-600 border border-gray-200 rounded-xl py-6 px-6 flex items-center gap-4 justify-between"}` } }`}
  
               onClick={() => toggleItem(despesa.id)} >
 
@@ -182,7 +182,7 @@ export default function Despesas() {
             {itemAberto === despesa.id && (
               <div className="rounded-b-xl border border-violet-300 border-t-violet-200 bg-white">                
 
-              <div className="flex p-4 justify-center w-full">
+              <div className="flex p-1 pb-4 justify-center w-full">
                 <div className="flex   rounded-xl border border-violet-300 bg-white ">
                   <button
                     className={`${acaoAberta === 'pagar' ? `${"py-1 px-6 flex-1 text-sm bg-violet-50 text-violet-700 border-r border-violet-300 rounded-xl "}`: `${"py-1 px-6 text-gray-600 text-sm  rounded-xl "}`}}`}
@@ -199,16 +199,16 @@ export default function Despesas() {
 
                 {acaoAberta === 'editar' && (
                   <form onSubmit={(e) => handleEditar(e, despesa.id)} className="animate-fade-in">
-                    <div className="pr-8 pl-4 grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                        <div className="flex flex-col">
+                    <div className="flex flex-wrap px-4 gap-2 ">
+                        <div className="flex flex-col w-full pb-2">
                             <label className="text-xs text-gray-600 mb-1">Descrição</label>
                             <input name="descricao" defaultValue={despesa.descricao} className="border border-gray-300 rounded px-2 py-1.5 text-sm" required />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-1 flex-col">
                             <label className="text-xs text-gray-600 mb-1">Valor</label>
                             <input name="valor" type="number" step="0.01" defaultValue={despesa.valor} className="border border-gray-300 rounded px-2 py-1.5 text-sm" required />
                         </div>
-                        <div className="flex flex-col">
+                        <div className="flex flex-1 flex-col">
                             <label className="text-xs text-gray-600 mb-1">Tipo</label>
                             <select name="tipo" defaultValue={despesa.tipo} className="border border-gray-300 bg-white rounded px-2 py-1.5 text-sm">
                                 <option value="despesa">Despesa</option>
@@ -216,7 +216,7 @@ export default function Despesas() {
                             </select>
                         </div>
                     </div>
-                    <div className="flex flex-col p-2 gap-2 ">
+                    <div className="flex flex-col p-2 gap-2 pt-6">
                       <div>
                         <button type="submit" className="w-full  py-2 rounded-md text-sm bg-violet-700 text-white ">Salvar Alterações</button>
                       </div>

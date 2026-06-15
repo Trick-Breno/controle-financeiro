@@ -1,8 +1,8 @@
 export function BotaoFiltro({children, selecionado, onClick}) {
-    const baseClasses = "text-sm flex px-5 py-1 bg-gray-50 rounded-xl border border-violet-300";
+    const baseClasses = "text-sm  border rounded-lg flex px-5 py-1  ";
     const stateClasses = selecionado
-    ? "text-violet-700 bg-violet-100"
-    : "text-gray-600";
+    ? "text-violet-700  border-2 border-violet-500"
+    : "text-gray-500 ";
 
     return (
         <button onClick={onClick} className={`${baseClasses} ${stateClasses}`}>

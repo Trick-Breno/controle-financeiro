@@ -4,7 +4,7 @@ import ResumoFinanceiro from "../components/ResumoFinanceiro";
 
 export default function AppLayout() {
   return (
-    <div className="min-h-screen bg-gray-100 "> 
+    <div className="min-h-screen bg-violet-500 "> 
       <Header />
       <ResumoFinanceiro />
       
