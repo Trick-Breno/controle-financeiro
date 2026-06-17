@@ -56,6 +56,6 @@ export const updateMovimentacaoSchema = z.object ({
     .optional(),
 
     status: z.enum(['pendente', 'parcial', 'concluido'], {errorMap: () => ({message: 'O status deve ser "pendente", "parcial" ou "concluido"'})})
-    .optional().default('pendente'),
+    .optional(),
   })
 });
