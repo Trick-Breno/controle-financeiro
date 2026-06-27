@@ -4,14 +4,17 @@ import { NotFoundError } from '../utils/AppError.js';
 
 export const createMovimentacao = async (userId, {id_carteira, descricao, valor, tipo, data_referencia, status}) => {
 
-    const carteira = await carteiraRepository.findById(id_carteira, userId)
-
-    if (!carteira) {
-        throw new NotFoundError('Carteira não encontrada ou nao pertence ao usuário')
+    if (id_carteira) {
+        const carteira = await carteiraRepository.findById(id_carteira, userId)
+        
+        if (!carteira) {
+            throw new NotFoundError('Carteira não encontrada ou nao pertence ao usuário')
+        }
     }
+
     const movimentacao = {
         userId,
-        id_carteira,
+        id_carteira: id_carteira || null,
         descricao,
         valor,
         tipo,

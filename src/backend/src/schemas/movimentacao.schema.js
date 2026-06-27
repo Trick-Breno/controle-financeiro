@@ -4,7 +4,9 @@ export const createMovimentacaoSchema = z.object({
   body: z.object({
       id_carteira: z.string()
       .regex(/^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$/, 
-      { message: 'ID da carteira inválido' }),
+      { message: 'ID da carteira inválido' })
+      .optional()
+      .nullable(),
 
       descricao: z.string().trim()
       .min(1,{message:'A descrição não pode estar vazia'})
