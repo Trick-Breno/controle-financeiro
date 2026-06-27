@@ -10,8 +10,8 @@ export default function ResumoFinanceiro()  {
 
             {/* Bloco do Saldo (Protegido) */}
             <div className="flex w-full gap-4 py-3 px-4 justify-between">
-                <h2 className="text-lg font-medium text-gray-800">Saldo</h2>
-                <span className="text-lg font-medium text-green-500">
+                <h2 className="text-xl font-medium text-gray-800">Saldo</h2>
+                <span className="text-xl font-medium text-green-500">
                     R$ {Number(saldoCarteiras?.total || 0).toFixed(2)}
                 </span>
             </div>    
@@ -19,20 +19,20 @@ export default function ResumoFinanceiro()  {
             {/* Lista de Totais (Adicionado os ?. para evitar o crash inicial) */}
             <ul className="space-y-2 py-3 px-4">
                 <li className="flex gap-6 justify-between">
-                    <span className="text-sm text-gray-700">Despesas</span>
-                    <span className="text-sm text-gray-700">
+                    <span className="text-base text-gray-700">Despesas</span>
+                    <span className="text-base text-gray-700">
                         R$ {Number(resumoDespesas?.total || 0).toFixed(2)}
                     </span>
                 </li>
                 <li className="flex gap-6 justify-between">
-                    <span className="text-sm text-gray-600">Pago</span>
-                    <span className="text-sm text-gray-600">
+                    <span className="text-base text-gray-600">Pago</span>
+                    <span className="text-base text-gray-600">
                         R$ {Number(resumoDespesas?.pago || 0).toFixed(2)}
                     </span>
                 </li>
                 <li className="flex gap-6 justify-between">
-                    <span className="text-sm text-gray-700">Pendente</span>
-                    <span className="text-sm text-red-500">
+                    <span className="text-base text-gray-700">Pendente</span>
+                    <span className="text-base text-red-500">
                         R$ {Number(resumoDespesas?.falta || 0).toFixed(2)}
                     </span>
                 </li>
