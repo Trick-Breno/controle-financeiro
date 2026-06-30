@@ -32,6 +32,7 @@ export function MovimentacoesProvider({children}) {
     }, [carregarMovimentacoes]);
 
     const despesas = movimentacoes.filter(m => m.tipo === 'despesa');
+    const receitas = movimentacoes.filter(m => m.tipo === 'receita')
 
     const resumoDespesas = despesas.reduce((acc, d) => {
         const valor = Number( d.valor);
@@ -45,6 +46,7 @@ export function MovimentacoesProvider({children}) {
         <MovimentacoesContext.Provider value={{
             movimentacoes,
             despesas,
+            receitas,
             resumoDespesas,
             loading,
             carregarMovimentacoes
