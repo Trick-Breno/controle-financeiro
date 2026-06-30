@@ -25,12 +25,6 @@ export default function ResumoFinanceiro()  {
                     </span>
                 </li>
                 <li className="flex gap-6 justify-between">
-                    <span className="text-base text-gray-600">Pago</span>
-                    <span className="text-base text-gray-600">
-                        R$ {Number(resumoDespesas?.pago || 0).toFixed(2)}
-                    </span>
-                </li>
-                <li className="flex gap-6 justify-between">
                     <span className="text-base text-gray-700">Pendente</span>
                     <span className="text-base text-red-500">
                         R$ {Number(resumoDespesas?.falta || 0).toFixed(2)}

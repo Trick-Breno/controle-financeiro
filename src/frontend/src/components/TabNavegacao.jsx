@@ -5,7 +5,7 @@ export function TabNavegacao({children, selecionado, onClick}) {
             className={`${
             selecionado
             ? 'py-2  flex-1 text-lg font-bold text-violet-700 border-b-2 border-violet-500  '
-            : 'py-2  flex-1 text-lg font-bold text-gray-500 border-b-2' }`}>
+            : 'py-2  flex-1 text-lg font-bold text-gray-700 border-b-2' }`}>
                 {children}
         </button>
     )
