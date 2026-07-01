@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import ResumoFinanceiro from "../components/ResumoFinanceiro";
+import ResumoFinanceiro from "../components/ResumoFinanceiro.jsx";
 import MenuNavegacao from "../components/MenuNavegacao";
 
 export default function AppLayout() {
