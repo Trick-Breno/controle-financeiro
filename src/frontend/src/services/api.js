@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-//solução temporaria para requisição funcionar no pc e no telefone
-const hostAtual = window.location.hostname;
-
-const BASE_URL = `http://${hostAtual}:3000/api`; /*const BASE_URL = import.meta.env.VITE_API_URL;*/
+const BASE_URL = import.meta.env.DEV 
+  ? `http://${window.location.hostname}:3000/api` 
+  : '/api';
 
 const api = axios.create({
   baseURL: BASE_URL,
@@ -22,7 +21,8 @@ api.interceptors.response.use(
   (error) => {
     const customMessage = error.response?.data?.message || 'Erro inesperado na comunicação com a API.';
     console.error('Erro na API:', customMessage);
-  return Promise.reject(error);  }
+    return Promise.reject(error);  
+  }
 );
 
 export default api;
