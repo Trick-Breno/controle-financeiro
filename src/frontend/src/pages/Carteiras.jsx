@@ -41,7 +41,7 @@ export default function Carteiras() {
                     </div>
                     <div className="flex items-baseline gap-1">
                         <label className="">Saldo </label>
-                        <input type="number" name="saldo_inicial" className="p-1 border  border-gray-400  rounded-md"/>
+                        <input type="number" step="0.01" name="saldo_inicial" className="p-1 border  border-gray-400  rounded-md"/>
                     </div>
                     <button type="submit" className="my-4 py-2 px-6 font-bold bg-violet-700 rounded-md text-white">Salvar</button>
                 </div>

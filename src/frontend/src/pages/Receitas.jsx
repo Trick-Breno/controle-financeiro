@@ -48,7 +48,7 @@ export default function Receitas() {
                             <input type="text" name="descricao" required className="p-1 border  border-gray-400  rounded-md" /></div>
                         <div className="flex items-baseline gap-1 ">
                             <label className="">Valor</label>
-                            <input type="number" name="valor" required className="p-1 border rounded-md  border-gray-400  "/></div>
+                            <input type="number" step="0.01" name="valor" required className="p-1 border rounded-md  border-gray-400  "/></div>
                         <div className="flex items-baseline gap-1 ">
                             <label className="">Carteira</label>
                             <select name="id_carteira" className="p-1 border border-gray-400 bg-white  rounded-md">

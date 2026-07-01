@@ -9,7 +9,6 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [erro, setErro] = useState("");
 
-  // Ponto único de acoplamento da auth. Fácil de trocar por localStorage.getItem('token') no futuro.
   const { getToken } = useAuth();
 
   useEffect(() => {
