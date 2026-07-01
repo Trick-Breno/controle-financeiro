@@ -3,7 +3,8 @@ import AppLayout from './layouts/AppLayout';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import PrivateRoute from './routes/PrivateRoute';
-import Carteiras from './pages/Receitas';
+import Receitas from './pages/Receitas';
+import Carteiras from './pages/Carteiras';
 import Movimentacoes from './pages/Movimentacoes'; // Importando a nova página principal
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/" element={<Movimentacoes />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/carteiras" element={<Carteiras />} />
+          <Route path="/receitas" element={<Receitas />} />
 
         </Route>
       </Route>
