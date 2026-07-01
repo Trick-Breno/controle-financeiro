@@ -38,25 +38,35 @@ export default function Receitas() {
     };
 
     return (
-        <div className="">
+        <div className=" bg-white">
             <form onSubmit={(e) => handleCriar(e)}>
-                <div className="p-4 pb-8 grid grid-cols-12">
-                    <input type="text" name="descricao" placeholder="Descricao" required className="col-span-4 p-1 border  border-gray-600  rounded-l-lg" />
-                    <input type="number" name="valor" placeholder="Valor" required className="col-span-2 p-1 border-y  border-gray-600  "/>
-                    <select name="id_carteira" className="col-span-4 p-1 border  border-gray-600 bg-white  rounded-r-lg">
-                        <option value="">Selecione</option>
-                        {carteiras.map((c) => (
-                            <option key={c.id} value={c.id}>{c.nome}</option>))}
-                    </select>
-                    <button type="submit" className="col-span-2 mx-2 font-bold bg-violet-700 rounded-md text-white"> adc</button>
+                <div className="flex flex-col my-4 px-6 py-4 border-b-2">
+                    <h3 className=" font-medium text-lg text-gray-800">Criar receita</h3>
+                    <div className=" pt-4 pb-2 gap-4 flex flex-col">
+                        <div className="flex items-baseline gap-1 ">
+                            <label className="">Nome</label>
+                            <input type="text" name="descricao" required className="p-1 border  border-gray-400  rounded-md" /></div>
+                        <div className="flex items-baseline gap-1 ">
+                            <label className="">Valor</label>
+                            <input type="number" name="valor" required className="p-1 border rounded-md  border-gray-400  "/></div>
+                        <div className="flex items-baseline gap-1 ">
+                            <label className="">Carteira</label>
+                            <select name="id_carteira" className="p-1 border border-gray-400 bg-white  rounded-md">
+                            <option value="">Selecione</option>
+                            {carteiras.map((c) => (
+                                <option key={c.id} value={c.id}>{c.nome}</option>))}
+                        </select></div>
+                        
+                    </div>
+                    <button type="submit" className=" my-4 py-2 px-6 font-bold bg-violet-700 rounded-md text-white"> Salvar</button>
                 </div>
             </form>
             <div>
                 {carteiras.map((carteira) => {
                     const receitasDaCarteira = receitas.filter(r => r.id_carteira === carteira.id);
                     return (
-                        <div className="flex flex-col mb-4 px-6 +" key={carteira.id}>
-                            <h3 className="text-xl font-bold  text-gray-800">{carteira.nome}</h3>
+                        <div className="flex flex-col py-1 px-6 " key={carteira.id}>
+                            <h3 className=" font-bold  text-gray-800 bg-gray-100">{carteira.nome}</h3>
                             <div className=""> 
                                 {receitasDaCarteira.map((receita) => (
                                     <div className="flex justify-between py-1 font-medium text-gray-800" key={receita.id}>

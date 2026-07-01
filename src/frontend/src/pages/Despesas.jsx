@@ -67,7 +67,7 @@ export default function Despesas() {
     try {
       const token = await getToken();
 
-      const resposta = await api.post(`/movimentacoes`, {
+      await api.post(`/movimentacoes`, {
         descricao: dados.descricao,
         valor: Number(dados.valor),
         tipo: 'despesa',
@@ -79,7 +79,6 @@ export default function Despesas() {
       e.target.reset();
 
       await carregarMovimentacoes();
-      await carregarCarteiras();
     } catch (error) {
       console.error("erro ao pagar", error);
       alert(JSON.stringify(error.response?.data || error.messsage ));
@@ -196,26 +195,26 @@ export default function Despesas() {
         </BotaoFiltro>
       </div>
         <form onSubmit={(e) => handleCriar(e)}>
-          <div className="flex mx-2 my-6">
+          <div className="flex flex-col mx-2 mb-6 py-2">
             <div className="grid grid-cols-12 mx-1 my-2">
-              <input type="text" name="descricao" className="col-span-8 p-1 border border-gray-400  rounded-l-lg " placeholder="Descrição" required/>
-              <input type="number" name="valor" className="col-span-4 pl-2 border border-gray-400 border-l-0 rounded-r-lg " placeholder="Valor" required />   
+              <input type="text" name="descricao" className="col-span-7 p-1 border border-gray-400  rounded-l-lg " placeholder="Nome" required/>
+              <input type="number" step="0.01" name="valor" className="col-span-4 pl-2 border border-gray-400 border-l-0 rounded-r-lg " placeholder="R$" required />   
+            <div className="col-span-1">
+              <button type="submit" className="text-2xl font-bold  bg-violet-700 text-white w-full mx-1 rounded-md ">+</button>
             </div>
-            <div className="flex my-2 px">
-              <button type="submit" className="text-2xl font-bold  bg-violet-700 text-white w-full px-4 py- rounded-md ">+</button>
             </div>
           </div>
         </form>
 
-      <div className="w-full flex flex-col ">
+      <div className="w-full flex flex-col">
         {despesasFiltradas.map((despesa) => (
           <div className={`${itemAberto === despesa.id ? `${" mx-4 text-lg bg-gray-50 border-2 border-violet-500 rounded-xl"}` : `${" mx-4 text-lg "}` } }`}key={despesa.id}>
 
-            <div className={`${itemAberto === despesa.id ? `${" py-4 px-2 flex items-center justify-between"}` : `${"bg-white  border-b border-gray-200 py-4 px-2 flex items-center gap-2 justify-between"}` } }`}
+            <div className={`${itemAberto === despesa.id ? `${" py-4 px-2 flex items-center justify-between"}` : `${"bg-white  border- border-gray-200 py-4 px-2 flex items-center gap-2 justify-between"}` } }`}
  
               onClick={() => toggleItem(despesa.id)} >
 
-              <div className="font-bold  text-gray-800">
+              <div className="font-semibold  text-gray-800">
                 <span>{despesa.descricao}</span>
               </div>
               <div className="flex items-center justify-center gap-2">
@@ -303,75 +302,3 @@ export default function Despesas() {
     </div>
   );
 }
-/*                    <input className="border border-gray-300  rounded-sm text-sm" 
-                      type="number"
-                      defaultValue={despesa.valor}/>*/
-
-                      /*                     <div className="bg-white px-2 grid grid-cols-3 gap-4 mb-4 pt-6 font-normal ">
-                      <div className=" flex flex-col text-gray-600 ">
-                        <label className=" text-xs text-gray-600 ">Renomear</label>
-                        <input className="border border-gray-300  rounded-sm text-sm" 
-                          name="descricao"
-                          type="text"
-                          defaultValue={despesa.descricao}/>
-                      </div>
-                      <div className="flex flex-col text-gray-600 ">
-                        <label className="text-xs text-gray-600">Valor</label>
-                        <input className="text-xs text-gray-600 border border-gray-300" 
-                          name="valor"
-                          type="number" step="0.01"
-                          defaultValue={despesa.valor} />
-                      </div>
-                      <div className="flex flex-col text-gray-600">
-                        <label className=" text-xs ">Tipo</label>
-                        <select name="tipo" className="border border-gray-300 bg-white rounded-sm text-sm">
-                          <option value="despesa">Despesa</option>
-                          <option value="receita">Receita</option>
-                        </select>
-                      </div>
-                    </div>
-                    
-                    <div className=" rounded-b-xl bg-white px-2 grid grid-cols-3 gap-4 pb-4 font-normal ">
-                      <div className=" flex flex-col text-gray-600 ">
-                        <label className=" text-xs text-gray-600 ">Pagar</label>
-
-                      </div>
-                      <div className="flex flex-col text-gray-600">
-                        <label className=" text-xs ">Carteira</label>
-                        <select name="id_carteira" className="border border-gray-300 bg-white rounded-sm text-sm">
-                          <option value="">selecione</option>
-                          {carteiras.map((carteira) => (
-                            <option key={carteira.id} value={carteira.id}>{carteira.nome}</option>
-                          ))}
-                        </select>
-                      </div>
-                      <div className="flex flex-col justify-end">
-                        <button type="submit" className="text-sm text-gray-700 bg-violet-100 px-4 py-1 rounded-md">Confirmar</button>
-                      </div>
-                    </div>
-*/
-
-
-/* bg-violet-600 text-white rounded-lg text-sm hover:bg-violet-700 transition*/
-
-/*if(valorPago >= valorOriginal) {
-        await api.patch(`/movimentacoes/${despesa.id}`, {
-          id_carteira: dados.id_carteira,
-          status: 'concluido'
-        }, {headers});
-      } else {
-        const valorRestante = valorOriginal - valorPago;
-
-        await api.post(`/movimentacoes`, {
-          descricao: `${despesa.descricao} (Parcial)`,
-          valor: valorPago,
-          id_carteira: dados.id_carteira,
-          tipo: despesa.tipo,
-          status: 'concluido',
-          data_referencia: despesa.data_referencia
-        }, {headers});
-        
-        await api.patch(`/movimentacoes/${despesa.id}`, {
-          valor: valorRestante
-        }, {headers})
-      }*/
