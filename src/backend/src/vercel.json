@@ -9,7 +9,7 @@
       "src": "src/frontend/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "outputDirectory": "dist"
+        "distDir": "dist"
       }
     }
   ],
@@ -20,7 +20,7 @@
     },
     {
       "source": "/(.*)",
-      "destination": "/src/frontend/dist/index.html"
+      "destination": "/index.html"
     }
   ]
 }
