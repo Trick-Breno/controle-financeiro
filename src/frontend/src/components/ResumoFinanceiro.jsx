@@ -32,7 +32,7 @@ export default function ResumoFinanceiro()  {
                 </li>
                 <li className="flex gap-6 justify-between">
                     <span className=" text-gray-700">Saldo Futuro</span>
-                    <span className=" text-gray-700">R$ {Number(saldoCarteiras.total - resumoDespesas.total).toFixed(2)}</span>
+                    <span className=" text-gray-700">R$ {Number(saldoCarteiras.total - resumoDespesas.falta).toFixed(2)}</span>
                 </li>
 
             </ul>

@@ -208,7 +208,7 @@ export default function Despesas() {
 
       <div className="w-full flex flex-col">
         {despesasFiltradas.map((despesa) => (
-          <div className={`${itemAberto === despesa.id ? `${" mx-4 text-lg bg-gray-50 border-2 border-violet-500 rounded-xl"}` : `${" mx-4 text-lg "}` } }`}key={despesa.id}>
+          <div className={`${itemAberto === despesa.id ? `${" mx-4 text-lg bg-gray-50 border-2 border-violet-500 rounded-xl"}` : `${"border-b mx-4 text-lg "}` } }`}key={despesa.id}>
 
             <div className={`${itemAberto === despesa.id ? `${" py-4 px-2 flex items-center justify-between"}` : `${"bg-white  border- border-gray-200 py-4 px-2 flex items-center gap-2 justify-between"}` } }`}
  
