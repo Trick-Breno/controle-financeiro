@@ -41,24 +41,24 @@ export default function Receitas() {
         <div className=" bg-white">
             <form onSubmit={(e) => handleCriar(e)}>
                 <div className="flex flex-col my-4 px-6 py-4 border-b-2">
-                    <h3 className=" font-medium text-lg text-gray-800">Criar receita</h3>
+                    <h3 className=" font-semibold text-lg text-gray-800">Criar receita</h3>
                     <div className=" pt-4 pb-2 gap-4 flex flex-col">
-                        <div className="flex items-baseline gap-1 ">
-                            <label className="">Nome</label>
-                            <input type="text" name="descricao" required className="p-1 border  border-gray-400  rounded-md" /></div>
-                        <div className="flex items-baseline gap-1 ">
-                            <label className="">Valor</label>
-                            <input type="number" step="0.01" name="valor" required className="p-1 border rounded-md  border-gray-400  "/></div>
-                        <div className="flex items-baseline gap-1 ">
-                            <label className="">Carteira</label>
-                            <select name="id_carteira" className="p-1 border border-gray-400 bg-white  rounded-md">
+                        <div className="flex gap-1"><div className="flex flex-col items-baseline gap-1 ">
+                            <label className="text-gray-800">Nome</label>
+                            <input type="text" name="descricao" required className="w-full p-1 border  border-gray-400  rounded-md" /></div>
+                        <div className="flex flex-col items-baseline gap-1 ">
+                            <label className="text-gray-800">Valor</label>
+                            <input type="number" step="0.01" name="valor" required className="w-20 p-1 border rounded-md  border-gray-400  "/></div>
+                        </div><div className="flex flex-col items-baseline gap-1 ">
+                            <label className="text-gray-800">Carteira</label>
+                            <select name="id_carteira" className="text-sm text-gray-700 p-1 border border-gray-400 bg-white  rounded-md">
                             <option value="">Selecione</option>
                             {carteiras.map((c) => (
                                 <option key={c.id} value={c.id}>{c.nome}</option>))}
                         </select></div>
                         
                     </div>
-                    <button type="submit" className=" my-4 py-2 px-6 font-bold bg-violet-700 rounded-md text-white"> Salvar</button>
+                    <button type="submit" className=" my-4 py-2 px-6 font-semibold bg-violet-700 rounded-md text-white"> Salvar</button>
                 </div>
             </form>
             <div>

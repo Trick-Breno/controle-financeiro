@@ -10,29 +10,29 @@ export default function ResumoFinanceiro()  {
 
             {/* Bloco do Saldo (Protegido) */}
             <div className="flex w-full gap-4 py-3 px-4 justify-between">
-                <h2 className="text-xl font-medium text-gray-800">Saldo</h2>
-                <span className="text-xl font-medium text-green-500">
+                <h2 className="text-xl font-semibold ">Saldo</h2>
+                <span className="text-xl font-semibold text-green-500">
                     R$ {Number(saldoCarteiras?.total || 0).toFixed(2)}
                 </span>
             </div>    
             
             {/* Lista de Totais (Adicionado os ?. para evitar o crash inicial) */}
-            <ul className="space-y-2 py-3 px-4">
+            <ul className="space-y-2 py-3 px-4 font-medium">
                 <li className="flex gap-6 justify-between">
-                    <span className="text-base text-gray-700">Despesas</span>
-                    <span className="text-base text-gray-700">
+                    <span className="text-base text-gray-800">Despesas</span>
+                    <span className="text-base text-gray-800">
                         R$ {Number(resumoDespesas?.total || 0).toFixed(2)}
                     </span>
                 </li>
                 <li className="flex gap-6 justify-between">
-                    <span className="text-base text-gray-700">Pendente</span>
-                    <span className="text-base text-red-500">
+                    <span className="text-base text-gray-800">Pendente</span>
+                    <span className="text-base text-red-400">
                         R$ {Number(resumoDespesas?.falta || 0).toFixed(2)}
                     </span>
                 </li>
                 <li className="flex gap-6 justify-between">
-                    <span className=" text-gray-700">Saldo Futuro</span>
-                    <span className=" text-gray-700">R$ {Number(saldoCarteiras.total - resumoDespesas.falta).toFixed(2)}</span>
+                    <span className="text-base text-gray-800">Saldo Futuro</span>
+                    <span className="text-base text-gray-800">R$ {Number(saldoCarteiras.total - resumoDespesas.falta).toFixed(2)}</span>
                 </li>
 
             </ul>

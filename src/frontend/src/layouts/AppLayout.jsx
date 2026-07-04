@@ -5,7 +5,7 @@ import MenuNavegacao from "../components/MenuNavegacao";
 
 export default function AppLayout() {
   return (
-    <div className=" bg-violet-500 "> 
+    <div className=" bg-violet-500 font-medium"> 
       <Header />
       <ResumoFinanceiro />
       

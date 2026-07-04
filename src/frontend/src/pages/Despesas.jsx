@@ -197,8 +197,8 @@ export default function Despesas() {
         <form onSubmit={(e) => handleCriar(e)}>
           <div className="flex flex-col mx-2 mb-6 py-2">
             <div className="grid grid-cols-12 mx-1 my-2">
-              <input type="text" name="descricao" className="col-span-7 p-1 border border-gray-400  rounded-l-lg " placeholder="Nome" required/>
-              <input type="number" step="0.01" name="valor" className="col-span-4 pl-2 border border-gray-400 border-l-0 rounded-r-lg " placeholder="R$" required />   
+              <input type="text" name="descricao" className="col-span-7 p-1 border border-gray-600  rounded-l-lg " placeholder="Nome" required/>
+              <input type="number" step="0.01" name="valor" className="col-span-4 pl-2 border border-gray-600 border-l-0 rounded-r-lg " placeholder="R$" required />   
             <div className="col-span-1">
               <button type="submit" className="text-2xl font-bold  bg-violet-700 text-white w-full mx-1 rounded-md ">+</button>
             </div>
@@ -208,16 +208,16 @@ export default function Despesas() {
 
       <div className="w-full flex flex-col">
         {despesasFiltradas.map((despesa) => (
-          <div className={`${itemAberto === despesa.id ? `${" mx-4 text-lg bg-gray-50 border-2 border-violet-500 rounded-xl"}` : `${"border-b mx-4 text-lg "}` } }`}key={despesa.id}>
+          <div className={`${itemAberto === despesa.id ? `${" mx-4 text-base bg-gray-50 border-2 border-violet-500 rounded-xl"}` : `${"border-b mx-4 text-base "}` } }`}key={despesa.id}>
 
             <div className={`${itemAberto === despesa.id ? `${" py-4 px-2 flex items-center justify-between"}` : `${"bg-white  border- border-gray-200 py-4 px-2 flex items-center gap-2 justify-between"}` } }`}
  
               onClick={() => toggleItem(despesa.id)} >
 
-              <div className="font-semibold  text-gray-800">
+              <div className="font-medium  ">
                 <span>{despesa.descricao}</span>
               </div>
-              <div className="flex items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-2 font-medium">
                 <span>R$ {despesa.valor}</span>
                 <span>{renderizarStatus(despesa.status) }</span>
 
