@@ -182,7 +182,7 @@ export default function Despesas() {
   
 
   return (
-    <div className="mt-6  bg-white ">
+    <div className="mt-6 bg-gray-50 ">
       <div className=" mx-4 pb-6 pt-2 flex gap-1   ">
         <BotaoFiltro selecionado={filtroAtivo === "pendente"} onClick={() => setFiltroAtivo("pendente")}>
           Pendente 
@@ -194,38 +194,38 @@ export default function Despesas() {
           Todas
         </BotaoFiltro>
       </div>
+
         <form onSubmit={(e) => handleCriar(e)}>
-          <div className="flex flex-col mx-2 mb-6 py-2">
-            <div className="grid grid-cols-12 mx-1 my-2">
-              <input type="text" name="descricao" className="col-span-7 p-1 border border-gray-600  rounded-l-lg " placeholder="Nome" required/>
-              <input type="number" step="0.01" name="valor" className="col-span-4 pl-2 border border-gray-600 border-l-0 rounded-r-lg " placeholder="R$" required />   
-            <div className="col-span-1">
-              <button type="submit" className="text-2xl font-bold  bg-violet-700 text-white w-full mx-1 rounded-md ">+</button>
+          <div className="flex flex-col mx-6 py-2 ">
+            <div className="grid grid-cols-12 my-2">
+              <input type="text" name="descricao" className="col-span-7 shadow-sm p-1 py-2 border border-gray-300  rounded-r-none " placeholder="Nome" required/>
+              <input type="number" step="0.01" name="valor" className="col-span-3 shadow-sm pl-2 py-2 border border-gray-300 border-l-0 rounded-l-none " placeholder="R$" required />   
+            <div className="col-span-2">
+              <button type="submit" className="text-2xl shadow-sm font-bold  bg-violet-700 text-white w-full mx-1 my-1 py-1 rounded-md ">+</button>
             </div>
             </div>
           </div>
         </form>
 
-      <div className="w-full flex flex-col">
+      <div className="w-full flex flex-col gap-4 ">
         {despesasFiltradas.map((despesa) => (
-          <div className={`${itemAberto === despesa.id ? `${" mx-4 text-base bg-gray-50 border-2 border-violet-500 rounded-xl"}` : `${"border-b mx-4 text-base "}` } }`}key={despesa.id}>
+          <div className={`${itemAberto === despesa.id ? `${" mx-6 text-base bg-white shadow-md shadow-gray-400 rounded-xl"}` : `${" rounded-xl shadow-sm  mx-6 text-base "}` } }`}key={despesa.id}>
 
-            <div className={`${itemAberto === despesa.id ? `${" py-4 px-2 flex items-center justify-between"}` : `${"bg-white  border- border-gray-200 py-4 px-2 flex items-center gap-2 justify-between"}` } }`}
+            <div className={`${itemAberto === despesa.id ? `${" py-4 px-4 flex  items-center justify-between"}` : `${"bg-white rounded-xl py-4 px-4 flex items-center gap-3 justify-between"}` } }`}
  
               onClick={() => toggleItem(despesa.id)} >
-
-              <div className="font-medium  ">
+              <div className="font-medium flex flex-wrap">
                 <span>{despesa.descricao}</span>
               </div>
-              <div className="flex items-center justify-center gap-2 font-medium">
-                <span>R$ {despesa.valor}</span>
+              <div className=" flex items-center justify-center gap-2 font-semibold">
+                <span>R${despesa.valor}</span>
                 <span>{renderizarStatus(despesa.status) }</span>
 
               </div>
             </div>
 
             {itemAberto === despesa.id && (
-              <div className=" rounded-b-2xl border-t border-gray-200 bg-white">                
+              <div className=" px-4 rounded-b-2xl border-t border-gray-200 bg-white">                
 
               <div className="flex pb-6 pt-2 justify-center w-full">
                 <div className="flex  bg-white ">

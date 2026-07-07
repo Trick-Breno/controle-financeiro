@@ -19,20 +19,20 @@ export default function ResumoFinanceiro()  {
             {/* Lista de Totais (Adicionado os ?. para evitar o crash inicial) */}
             <ul className="space-y-2 py-3 px-4 font-medium">
                 <li className="flex gap-6 justify-between">
-                    <span className="text-base text-gray-800">Despesas</span>
-                    <span className="text-base text-gray-800">
+                    <span className="text-base font-normal text-gray-800">Despesas</span>
+                    <span className="text-base font-normal text-gray-800">
                         R$ {Number(resumoDespesas?.total || 0).toFixed(2)}
                     </span>
                 </li>
                 <li className="flex gap-6 justify-between">
-                    <span className="text-base text-gray-800">Pendente</span>
-                    <span className="text-base text-red-400">
+                    <span className="text-base font-normal text-gray-800">Pendente</span>
+                    <span className="text-base font-normal text-red-400">
                         R$ {Number(resumoDespesas?.falta || 0).toFixed(2)}
                     </span>
                 </li>
                 <li className="flex gap-6 justify-between">
-                    <span className="text-base text-gray-800">Saldo Futuro</span>
-                    <span className="text-base text-gray-800">R$ {Number(saldoCarteiras.total - resumoDespesas.falta).toFixed(2)}</span>
+                    <span className="text-base font-normal text-gray-800">Saldo Futuro</span>
+                    <span className="text-base font-normal text-gray-800">R$ {Number(saldoCarteiras.total - resumoDespesas.falta).toFixed(2)}</span>
                 </li>
 
             </ul>

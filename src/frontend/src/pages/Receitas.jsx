@@ -50,9 +50,8 @@ export default function Receitas() {
                             <label className="text-gray-800">Valor</label>
                             <input type="number" step="0.01" name="valor" required className="w-20 p-1 border rounded-md  border-gray-400  "/></div>
                         </div><div className="flex flex-col items-baseline gap-1 ">
-                            <label className="text-gray-800">Carteira</label>
-                            <select name="id_carteira" className="text-sm text-gray-700 p-1 border border-gray-400 bg-white  rounded-md">
-                            <option value="">Selecione</option>
+                            <select name="id_carteira" className="text text-gray-700 p-1 border border-gray-400 bg-white  rounded-md">
+                            <option value="">Selecionar Carteira</option>
                             {carteiras.map((c) => (
                                 <option key={c.id} value={c.id}>{c.nome}</option>))}
                         </select></div>

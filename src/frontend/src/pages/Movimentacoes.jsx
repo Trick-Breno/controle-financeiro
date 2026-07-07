@@ -7,7 +7,7 @@ export default function Movimentacoes() {
     const [abaAberta, setAbaAberta] = useState("despesas");
 
     return (
-        <div className=" w-full">
+        <div className=" w-full ">
             <div className="mx-2 mt-1 flex bg-white ">
                 <TabNavegacao selecionado={abaAberta === 'despesas'} onClick={() => setAbaAberta('despesas')}>
                     Despesas
@@ -16,7 +16,7 @@ export default function Movimentacoes() {
                     Receitas
                 </TabNavegacao>
             </div>
-            <div className="mt-2">
+            <div className="mt-2 ">
                 {abaAberta === 'despesas' ? (<Despesas />) : (<Receitas />)}
             </div>
         </div>
