@@ -182,7 +182,7 @@ export default function Despesas() {
   
 
   return (
-    <div className="mt-6 bg-gray-50 ">
+    <div className="mt-6 bg-gray-100 ">
       <div className=" mx-4 pb-6 pt-2 flex gap-1   ">
         <BotaoFiltro selecionado={filtroAtivo === "pendente"} onClick={() => setFiltroAtivo("pendente")}>
           Pendente 
@@ -198,10 +198,10 @@ export default function Despesas() {
         <form onSubmit={(e) => handleCriar(e)}>
           <div className="flex flex-col mx-6 py-2 ">
             <div className="grid grid-cols-12 my-2">
-              <input type="text" name="descricao" className="col-span-7 shadow-sm p-1 py-2 border border-gray-300  rounded-r-none " placeholder="Nome" required/>
+              <input type="text" name="descricao" className="col-span-7 shadow-sm p-1 py-2 border border-gray-300  rounded-lg rounded-r-none " placeholder="Nome" required/>
               <input type="number" step="0.01" name="valor" className="col-span-3 shadow-sm pl-2 py-2 border border-gray-300 border-l-0 rounded-l-none " placeholder="R$" required />   
             <div className="col-span-2">
-              <button type="submit" className="text-2xl shadow-sm font-bold  bg-violet-700 text-white w-full mx-1 my-1 py-1 rounded-md ">+</button>
+              <button type="submit" className="text-2xl shadow-sm font-bold  bg-violet-700 text-white w-full  py-1 rounded-lg rounded-l-none ">+</button>
             </div>
             </div>
           </div>
