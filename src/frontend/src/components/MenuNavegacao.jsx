@@ -12,14 +12,23 @@ export default function MenuNavegacao() {
                 className={({ isActive }) => isActive ? estiloAtivo : estiloInativo}
             >
                 <span className="text-xl mb-1">💸</span>
-                <span className="text-[10px] uppercase tracking-wider">Movimentações</span>
+                <span className="text-[10px] uppercase tracking-wider">Despesas</span>
             </NavLink>
+
+            <NavLink 
+                to="/receitas" 
+                className={({ isActive }) => isActive ? estiloAtivo : estiloInativo}
+            >
+                <span className="text-xl mb-1">💵​</span>
+                <span className="text-[10px] uppercase tracking-wider">receitas</span>
+            </NavLink>
+
 
             <NavLink 
                 to="/carteiras" 
                 className={({ isActive }) => isActive ? estiloAtivo : estiloInativo}
             >
-                <span className="text-xl mb-1">💰​</span>
+                <span className="text-xl mb-1">🏦​​</span>
                 <span className="text-[10px] uppercase tracking-wider">Carteiras</span>
             </NavLink>
 

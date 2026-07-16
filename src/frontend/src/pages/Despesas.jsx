@@ -66,6 +66,7 @@ export default function Despesas() {
 
     try {
       const token = await getToken();
+      await loading();
 
       await api.post(`/movimentacoes`, {
         descricao: dados.descricao,
@@ -182,8 +183,9 @@ export default function Despesas() {
   
 
   return (
-    <div className="mt-6 bg-gray-100 ">
-      <div className=" mx-4 pb-6 pt-2 flex gap-1   ">
+    <div className=" ">
+      <h1 className="font-semibold text-xl text-gray-800">Despesas</h1>
+      <div className=" mt-4 pb-4 pt-2 flex w-full gap-1 ">
         <BotaoFiltro selecionado={filtroAtivo === "pendente"} onClick={() => setFiltroAtivo("pendente")}>
           Pendente 
         </BotaoFiltro>
@@ -196,10 +198,10 @@ export default function Despesas() {
       </div>
 
         <form onSubmit={(e) => handleCriar(e)}>
-          <div className="flex flex-col mx-6 py-2 ">
+          <div className="flex flex-col py-2 ">
             <div className="grid grid-cols-12 my-2">
               <input type="text" name="descricao" className="col-span-7 shadow-sm p-1 py-2 border border-gray-300  rounded-lg rounded-r-none " placeholder="Nome" required/>
-              <input type="number" step="0.01" name="valor" className="col-span-3 shadow-sm pl-2 py-2 border border-gray-300 border-l-0 rounded-l-none " placeholder="R$" required />   
+              <input type="number" step="0.01" name="valor" className=" col-span-3 shadow-sm pl-2 py-2 border border-gray-300 border-l-0 rounded-l-none " placeholder="R$" required />   
             <div className="col-span-2">
               <button type="submit" className="text-2xl shadow-sm font-bold  bg-violet-700 text-white w-full  py-1 rounded-lg rounded-l-none ">+</button>
             </div>
@@ -209,7 +211,7 @@ export default function Despesas() {
 
       <div className="w-full flex flex-col gap-4 ">
         {despesasFiltradas.map((despesa) => (
-          <div className={`${itemAberto === despesa.id ? `${" mx-6 text-base bg-white shadow-md shadow-gray-400 rounded-xl"}` : `${" rounded-xl shadow-sm  mx-6 text-base "}` } }`}key={despesa.id}>
+          <div className={`${itemAberto === despesa.id ? `${"text-base bg-white shadow-md shadow-gray-400 rounded-xl"}` : `${" rounded-xl shadow-sm text-base "}` } }`}key={despesa.id}>
 
             <div className={`${itemAberto === despesa.id ? `${" py-4 px-4 flex  items-center justify-between"}` : `${"bg-white rounded-xl py-4 px-4 flex items-center gap-3 justify-between"}` } }`}
  
@@ -246,16 +248,16 @@ export default function Despesas() {
                   <form onSubmit={(e) => handleEditar(e, despesa.id)} className="animate-fade-in">
                     <div className="flex flex-col px-2 gap-4 ">
                       <div className="flex flex-col">
-                          <label className="text-base text-gray-800 font-medium mb-1">Descrição</label>
+                          <label className="text-sm text-gray-800 font-medium mb-1">Descrição</label>
                           <input name="descricao" defaultValue={despesa.descricao} className="border border-gray-300 rounded-md px-2 py-2 text-gray-600 text-sm font-normal" required />
                       </div>
                       <div className="flex flex-col max-w-20">
-                          <label className="text-base font-medium mb-1 text-gray-800">Valor</label>
+                          <label className="text-sm font-medium mb-1 text-gray-800">Valor</label>
                           <input name="valor" type="number" step="0.01" defaultValue={despesa.valor} className="border border-gray-300 rounded-md px-2 py-2 text-gray-600 text-sm font-normal" required />
                       </div>
 
                       <div className="flex flex-col">
-                        <label className="text-base text-gray-800 font-medium mb-1">Tipo</label>
+                        <label className="text-sm text-gray-800 font-medium mb-1">Tipo</label>
                         <select name="tipo" defaultValue={despesa.tipo} className="border border-gray-300 bg-white rounded-md px-2 py-2 text-gray-600 text-sm font-normal">
                             <option value="despesa">Despesa</option>
                             <option value="receita">Receita</option>
@@ -277,11 +279,11 @@ export default function Despesas() {
                   <form onSubmit={(e) => handlePagar(e, despesa)} className="animate-fade-in">
                       <div className="flex flex-col px-2 pb-4 gap-4 ">
                           <div className="flex flex-col">
-                              <label className="text-base font-medium mb-1 text-gray-800">Valor a Pagar</label>
+                              <label className="text-sm font-medium mb-1 text-gray-800">Valor a Pagar</label>
                               <input name="valor_pago" type="number" step="0.01" defaultValue={despesa.valor} max={despesa.valor} className="border border-gray-300 rounded-lg px-2 py-2  text-gray-600 text-sm font-normal" required />
                           </div>
                           <div className="flex flex-col">
-                              <label className="text-base font-medium mb-1 text-gray-800">Carteira</label>
+                              <label className="text-sm font-medium mb-1 text-gray-800">Carteira</label>
                               <select name="id_carteira" className="border border-gray-300 bg-white rounded-lg px-2 py-2 text-sm font-normal  text-gray-600" required>
                                   <option value="">Selecione...</option>
                                   {carteiras.map(c => <option key={c.id} value={c.id}>{c.nome} R$ {c.saldo_atual}</option>)}

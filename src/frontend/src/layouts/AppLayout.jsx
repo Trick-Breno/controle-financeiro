@@ -9,7 +9,7 @@ export default function AppLayout() {
       <Header />
       <ResumoFinanceiro />
       
-      <main className="max-w-7xl min-h-screen mt-6 pt-6 pb-8 rounded-t-3xl bg-white">
+      <main className="max-w-7xl min-h-screen px-4 mt-6 pt-6 pb-20 rounded-t-3xl bg-gray-100">
         <Outlet />
       </main>
       <MenuNavegacao/>
