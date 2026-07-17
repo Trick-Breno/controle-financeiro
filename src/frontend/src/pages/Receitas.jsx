@@ -39,19 +39,21 @@ export default function Receitas() {
 
     return (
         <div className=" ">
+            <h1 className="font-semibold text-xl text-center text-gray-800">Receitas</h1>
             <form onSubmit={(e) => handleCriar(e)}>
-                <div className="flex flex-col my-4 px-4 py-4 border-b-2 rounded-xl bg-white">
-                    <h3 className=" font-semibold text-lg text-gray-800">Criar receita</h3>
+                <div className="flex flex-col my-4 px-4 py-2 border-b-2 rounded-xl shadow-sm  bg-white">
+                    <h2 className=" text-lg text-gray-800">Adicionar Receita</h2>
                     <div className=" pt-4 pb-2 gap-4 flex flex-col">
-                        <div className="flex gap-1"><div className="flex flex-col items-baseline gap-1 ">
+                        <div className="flex flex-col gap-1">
                             <label className="text-sm text-gray-800">Nome</label>
-                            <input type="text" name="descricao" required className="w-full p-1 border  border-gray-400  rounded-md" /></div>
+                            <input type="text" name="descricao" required className="text-gray-800 w-full p-2 border  border-gray-400  rounded-md" /></div>
                         <div className="flex flex-col items-baseline gap-1 ">
                             <label className="text-sm text-gray-800">Valor</label>
-                            <input type="number" step="0.01" name="valor" required className="w-20 p-1 border rounded-md  border-gray-400  "/></div>
-                        </div><div className="flex flex-col items-baseline gap-1 ">
-                            <select name="id_carteira" className="text-sm text-gray-700 p-1 border border-gray-400 bg-white  rounded-md">
-                            <option value="">Selecionar Carteira</option>
+                            <input type="number" step="0.01" name="valor" required className="w-full text-gray-800 p-2 border rounded-md  border-gray-400  "/></div>
+                        <div className="flex flex-col items-baseline gap-1 ">
+                            <label className="text-sm text-gray-800">Carteira</label>
+                            <select name="id_carteira" className="text-gray-800 p-2 border border-gray-400 bg-white  rounded-md">
+                            <option value="">Selecione</option>
                             {carteiras.map((c) => (
                                 <option key={c.id} value={c.id}>{c.nome}</option>))}
                         </select></div>
