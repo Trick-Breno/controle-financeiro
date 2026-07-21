@@ -66,7 +66,6 @@ export default function Despesas() {
 
     try {
       const token = await getToken();
-      await loading();
 
       await api.post(`/movimentacoes`, {
         descricao: dados.descricao,
