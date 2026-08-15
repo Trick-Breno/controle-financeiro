@@ -1,14 +1,14 @@
 import { Routes, Route } from 'react-router-dom';
-import AppLayout from './layouts/AppLayout';
-import Dashboard from './pages/Dashboard';
-import Login from './pages/Login';
-import PrivateRoute from './routes/PrivateRoute';
-import Receitas from './pages/Receitas';
-import Carteiras from './pages/Carteiras';
-import Movimentacoes from './pages/Movimentacoes'; // Importando a nova página principal
-import Despesas from './pages/Despesas';
+import { AppLayout } from './layouts/AppLayout';
+import { Dashboard } from './pages/Dashboard';
+import { Login } from './pages/Login';
+import { PrivateRoute } from './routes/PrivateRoute';
+import { Receitas } from './pages/Receitas';
+import { Carteiras } from './pages/Carteiras';
+import { Movimentacoes } from './pages/Movimentacoes'; // Importando a nova página principal
+import { Despesas } from './pages/Despesas';
 
-export default function App() {
+export function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />

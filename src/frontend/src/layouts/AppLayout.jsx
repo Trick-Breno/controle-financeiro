@@ -1,9 +1,9 @@
 import { Outlet } from "react-router-dom";
 import Header from "../components/Header";
-import ResumoFinanceiro from "../components/ResumoFinanceiro.jsx";
-import MenuNavegacao from "../components/MenuNavegacao";
+import { ResumoFinanceiro } from "../components/ResumoFinanceiro.jsx";
+import { MenuNavegacao } from "../components/MenuNavegacao";
 
-export default function AppLayout() {
+export function AppLayout() {
   return (
     <div className=" bg-violet-500 font-medium"> 
       <Header />

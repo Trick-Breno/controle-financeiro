@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-export default function MenuNavegacao() {
+export function MenuNavegacao() {
     const estiloInativo = "flex flex-col items-center justify-center w-full h-full text-gray-400 hover:text-gray-600 transition-colors";
     const estiloAtivo = "flex flex-col items-center justify-center w-full h-full text-violet-700 font-semibold";
 

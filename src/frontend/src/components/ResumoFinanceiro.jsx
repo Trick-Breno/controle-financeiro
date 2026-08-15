@@ -1,7 +1,7 @@
 import { useMovimentacoes } from "../contexts/MovimentacoesContext";
 import { useCarteiras } from "../contexts/CarteirasContext";
 
-export default function ResumoFinanceiro()  {
+export function ResumoFinanceiro()  {
     const { resumoDespesas } = useMovimentacoes();
     const { saldoCarteiras } = useCarteiras();
 

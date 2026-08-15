@@ -1,7 +1,7 @@
 import { useAuth } from "@clerk/clerk-react";
 import { Navigate, Outlet } from "react-router-dom";
 
-export default function PrivateRoute() {
+export function PrivateRoute() {
   const { isLoaded, userId } = useAuth();
 
   // Enquanto o Clerk está verificando a sessão, mostra um loading genérico

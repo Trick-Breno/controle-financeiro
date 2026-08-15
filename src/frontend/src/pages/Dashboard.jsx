@@ -3,7 +3,7 @@ import { useAuth, UserButton } from "@clerk/clerk-react";
 import { listarCarteiras } from "../services/carteira";
 import { listarDespesas } from "../services/despesa";
 
-export default function Dashboard() {
+export function Dashboard() {
   const [carteiras, setCarteiras] = useState([]);
   const [despesas, setDespesas] = useState([]);
   const [loading, setLoading] = useState(false);

@@ -1,7 +1,7 @@
 import { SignInButton, SignedIn, SignedOut } from "@clerk/clerk-react";
 import { Navigate } from "react-router-dom";
 
-export default function Login() {
+export function Login() {
   return (
     <div className="flex h-screen items-center justify-center bg-gray-50">
       

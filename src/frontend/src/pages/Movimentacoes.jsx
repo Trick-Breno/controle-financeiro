@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Despesas from "./Despesas";
-import Receitas from "./Receitas";
+import { Despesas } from "./Despesas";
+import { Receitas } from "./Receitas";
 import { TabNavegacao } from "../components/TabNavegacao";
 
-export default function Movimentacoes() {
+export function Movimentacoes() {
     const [abaAberta, setAbaAberta] = useState("despesas");
 
     return (

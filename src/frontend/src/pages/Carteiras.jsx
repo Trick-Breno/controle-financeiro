@@ -3,7 +3,7 @@ import api from "../services/api";
 import { useMovimentacoes } from "../contexts/MovimentacoesContext";
 import { useCarteiras } from "../contexts/CarteirasContext";
 
-export default function Carteiras() {
+export function Carteiras() {
     const {carregarCarteiras, carteiras} = useCarteiras();
     const {carregarMovimentacoes} = useMovimentacoes();
     const {getToken, userId} = useAuth();
